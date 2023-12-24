@@ -1,0 +1,44 @@
+{{ template "base" .}}
+
+{{ define "content"}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Make reservation</h2>
+            {{ $res := index .Data "reservation" }}
+            <form action="/reservation" method="post">
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                <div class="form-group mt-5">
+                    <label for="first_name">First name</label>
+                    {{with .Form.Error.Get "first_name"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input value="{{$res.FirstName}}" {{ with .Form.Error.Get "first_name" }} required {{end}} type="text"  name="first_name" id="first_name" class="form-control">
+                </div>
+                <div class="form-group mt-5">
+                    <label for="last_name">Last name</label>
+                    {{with .Form.Error.Get "last_name"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input value="{{$res.LastName}}" {{ with .Form.Error.Get "last_name" }} required {{end}} type="text"  name="last_name" id="last_name" class="form-control">
+                </div>
+                <div class="form-group mt-5">
+                    <label for="email">Email</label>
+                    {{with .Form.Error.Get "email"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input value="{{$res.Email}}" {{ with .Form.Error.Get "email" }} required {{end}} type="text"  name="email" id="email" class="form-control">
+                </div>
+                <div class="form-group mt-5">
+                    <label for="phone">Phone</label>
+                    <input value="{{$res.Phone}}" type="text"  name="phone" id="phone" class="form-control">
+                </div>
+                <hr>
+
+                <input type="submit" class="btn btn-primary" value="make reservation">
+            </form>
+        </div>
+    </div>
+
+</div>
+{{end}}
